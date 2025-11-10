@@ -1,12 +1,6 @@
 # Build Stage
 FROM ghcr.io/graalvm/native-image-community:21 AS builder
 
-# Set up locale
-RUN microdnf install -y glibc-langpack-en && \
-    microdnf clean all
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US:en
-ENV LC_ALL=en_US.UTF-8
 
 WORKDIR /app
 COPY . .
