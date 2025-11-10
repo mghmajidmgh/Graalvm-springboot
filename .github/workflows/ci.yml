@@ -6,6 +6,17 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:  # Enables manual triggering
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: false
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
+        - prod
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
