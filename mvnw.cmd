@@ -1,0 +1,1 @@
+echo 'Maven wrapper placeholder'
