@@ -17,7 +17,7 @@ spec:
       containers:
       - name: demo-graalvm
         # Replace this image with your pushed Docker Hub image
-        image: mghmajidmgh/Graalvm-springboot:latest
+        image: mghmajidmgh/graalvm-springboot:latest
         ports:
         - containerPort: 8080
 
