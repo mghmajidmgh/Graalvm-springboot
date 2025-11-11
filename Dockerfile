@@ -6,7 +6,8 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
     ./mvnw -B --no-transfer-progress package -Pnative
-# RUN ls -la app/de*  # failed to build: failed to solve: process "/bin/sh -c ls -la app/de*" did not complete successfully: exit code: 2 
+RUN echo "--- target contents ---" && ls -la target || true
+RUN echo "--- find target files ---" && find target -maxdepth 3 -type f -exec ls -l {} \; || true
 
 # Run Stage
 FROM ubuntu:22.04
