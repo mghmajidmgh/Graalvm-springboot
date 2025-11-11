@@ -9,9 +9,17 @@ RUN chmod +x mvnw && \
 # RUN ls -la app/de*  # failed to build: failed to solve: process "/bin/sh -c ls -la app/de*" did not complete successfully: exit code: 2 
 
 # Run Stage
-FROM alpine:3.19
-RUN apk add --no-cache libstdc++
+FROM ubuntu:22.04
+
+# Install minimal runtime deps (glibc + libstdc++) required by GraalVM native images
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libstdc++6 ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
-COPY --from=builder /app/demo /app/demo
+# copy native executable produced by the builder (it lives under target/)
+COPY --from=builder /app/target/demo /app/demo
+# ensure it's executable
+RUN chmod +x /app/demo || true
 EXPOSE 8080
-ENTRYPOINT ["./demo"]
+ENTRYPOINT ["/app/demo"]
