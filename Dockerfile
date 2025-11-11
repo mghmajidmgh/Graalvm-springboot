@@ -6,8 +6,7 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
     ./mvnw -B --no-transfer-progress package -Pnative
-RUN echo "--- target contents ---" && ls -la target || true
-RUN echo "--- find target files ---" && find target -maxdepth 3 -type f -exec ls -l {} \; || true
+RUN echo "--- target contents ---" && ls -laR target || true
 
 # Run Stage
 FROM ubuntu:22.04
