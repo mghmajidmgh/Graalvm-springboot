@@ -6,7 +6,8 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
     ./mvnw -B --no-transfer-progress package -Pnative
-RUN echo "--- target contents ---" && ls -laR target || true
+
+RUN which demo_graal
 
 # Run Stage
 FROM ubuntu:22.04
@@ -18,8 +19,9 @@ RUN apt-get update && \
 
 WORKDIR /app
 # copy native executable produced by the builder (it lives under target/)
-COPY --from=builder /app/target/demo /app/demo
+# the native image name is now 'demo_graal'
+COPY --from=builder /app/target/demo_graal /app/demo_graal
 # ensure it's executable
-RUN chmod +x /app/demo || true
+RUN chmod +x /app/demo_graal || true
 EXPOSE 8080
-ENTRYPOINT ["/app/demo"]
+ENTRYPOINT ["/app/demo_graal"]

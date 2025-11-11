@@ -76,12 +76,13 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
-                        <version>0.9.28</version>
+                        <version>0.10.2</version>
                         <extensions>true</extensions>
                         <configuration>
                             <mainClass>com.example.demo.DemoApplication</mainClass>
                             <buildArgs>
-                                <buildArg>-H:Name=demo</buildArg>
+                                <!-- produce native image named 'demo_graal' -->
+                                <buildArg>-H:Name=demo_graal</buildArg>
                                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
                             </buildArgs>
                         </configuration>
