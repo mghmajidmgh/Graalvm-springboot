@@ -6,12 +6,12 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
     ./mvnw -B --no-transfer-progress package -Pnative
-RUN ls -la target/de*
+RUN ls -la app/de*
 
 # Run Stage
 FROM alpine:3.19
 RUN apk add --no-cache libstdc++
 WORKDIR /app
-COPY --from=builder /app/target/demo /app/demo
+COPY --from=builder /app/demo /app/demo
 EXPOSE 8080
 ENTRYPOINT ["./demo"]
