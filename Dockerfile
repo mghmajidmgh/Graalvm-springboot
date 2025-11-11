@@ -5,9 +5,17 @@ FROM ghcr.io/graalvm/native-image-community:21 AS builder
 WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
-    ./mvnw -B --no-transfer-progress package -Pnative
+        ./mvnw -B --no-transfer-progress package -Pnative || (echo "Maven native build failed"; exit 1); \
+        echo ""; echo "=== target directory listing ==="; ls -la target/ || true; \
+        echo ""; echo "=== checking for demo_graal file ==="; \
+        if [ -f target/demo_graal ]; then \
+            echo "Found target/demo_graal"; ls -la target/demo_graal; \
+        else \
+            echo "target/demo_graal not found, searching for similar files:"; \
+            find target -maxdepth 3 -type f -name "*demo*" -ls || true; \
+        fi
 
-RUN which demo_graal
+#RUN which demo_graal
 
 # Run Stage
 FROM ubuntu:22.04
