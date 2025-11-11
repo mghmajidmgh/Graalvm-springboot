@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw && \
     ./mvnw -B --no-transfer-progress package -Pnative
-# RUN ls -la app/de*   # failed to build: failed to solve: process "/bin/sh -c ls -la app/de*" did not complete successfully: exit code: 2
+# RUN ls -la app/de*  # failed to build: failed to solve: process "/bin/sh -c ls -la app/de*" did not complete successfully: exit code: 2 
 
 # Run Stage
 FROM alpine:3.19
